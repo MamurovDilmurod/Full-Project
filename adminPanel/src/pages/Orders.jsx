@@ -97,7 +97,7 @@ const Orders = ({ token }) => {
                 Method: {order.paymentMethod}
               </p>
               <p
-                className={`mt-1 font-medium ${order.payment ? "text-green-600" : "text-red-500"
+                className={`mt-1 font-medium ${order.payment ? "text-green-600" : "text-green-600"
                   }`}
               >
                 Payment: {order.payment ? "Done" : "Pending"}
