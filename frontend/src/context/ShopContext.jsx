@@ -111,11 +111,13 @@ const ShopContextProvider = (props) => {
     });
     return totalAmount;
   };
-
+  // 2-varianti
   const getProductsData = async () => {
     try {
       const response = await axios.get(backendUrl + "/api/product/list");
+      console.log("API Response:", response); // Log the full response
       if (response.data.success) {
+        console.log("Products Data:", response.data.products); // Check if products are inside the response
         setProduct(response.data.products);
       } else {
         console.log("Error fetching products:", response.data.message);
@@ -124,6 +126,21 @@ const ShopContextProvider = (props) => {
       console.error("Error fetching products:", error);
     }
   };
+
+  // 1-varianti 
+  // const getProductsData = async () => {
+  //   try {
+  //     const response = await axios.get(backendUrl + "/api/product/list");
+  //     console.log(response.data);
+  //     if (response.data.success) {
+  //       setProduct(response.data.products);
+  //     } else {
+  //       console.log("Error fetching products:", response.data.message);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching products:", error);
+  //   }
+  // };
   const getUserCart = async (token) => {
     try {
       const response = await axios.get(backendUrl + "/api/cart/list", {}, { headers: { token } });

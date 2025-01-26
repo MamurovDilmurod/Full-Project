@@ -73,7 +73,7 @@ const Collection = () => {
         setLoading(true);
         applyFilter();
         setLoading(false);
-    }, [category, subCategory, priceOrder, products, search, showSearch]);
+    }, [category, subCategory, products, search, showSearch]);
 
     // Dastlabki mahsulotlarni sozlash
     useEffect(() => {

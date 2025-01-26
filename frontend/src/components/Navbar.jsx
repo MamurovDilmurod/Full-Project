@@ -14,16 +14,23 @@ function Navbar() {
     const { setShowSearch, getCartCount, navigate, token, setToken, setCartItem } = useContext(ShopContext);
 
     const logout = () => {
+        // Tokenni localStorage-dan o'chirish
         localStorage.removeItem("token");
-        setToken("")
-        setCartItem({})
-        navigate("/login")
-    }
 
-    const changeLanguage = (lng) => {
-        i18n.changeLanguage(lng);
-        setIsUzbek(lng === "uz");
+        // Tokenni holatni bo'shatish
+        setToken("");
+
+        // Savatni tozalash
+        setCartItem({});
+
+        // Login sahifasiga yo'naltirish
+        if (navigate) {
+            navigate("/login");
+        } else {
+            window.location.href = "/login"; // Zaxira usul sifatida
+        }
     };
+
 
     const toggleSearch = () => {
         setIsSearchOpen(!isSearchOpen); // Toggle search visibility
@@ -102,17 +109,12 @@ function Navbar() {
                             <img className="w-6 cursor-pointer" src={assets.profile_icon} alt="Profile" />
                         </Link>
                         <div className="absolute right-0 hidden pt-4 group-hover:block dropdown-menu">
-                            <div className="flex flex-col gap-2 px-5 py-3 text-gray-500 rounded cursor-pointer w-36 bg-slate-100">
-                                <p className="cursor-pointer hover:text-black">
-                                    {t("navbar.myProfile")}
-                                </p>
-                                <p className="cursor-pointer hover:text-black">
-                                    {t("navbar.myOrders")}
-                                </p>
-                                <p onClick={logout} className="cursor-pointer hover:text-black">
-                                    {t("navbar.logout")}
-                                </p>
-                            </div>
+                            <button
+                                onClick={logout}
+                                className="px-4 py-2 text-white bg-red-500 rounded-md hover:bg-red-600"
+                            >
+                                Logout
+                            </button>
                         </div>
                     </div>
                     {/* Cart Icon */}

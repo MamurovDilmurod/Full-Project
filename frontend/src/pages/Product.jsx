@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import { Button, message } from "antd";
 import RelatedProduct from "../components/RelatedProduct";
+import Loader from "../components/Loader";
 
 const Product = () => {
     const { products, addToCart } = useContext(ShopContext);
@@ -26,7 +27,7 @@ const Product = () => {
     }, [productId, products]);
 
     if (!productData) {
-        return <div>Loading...</div>;
+        return <Loader />;
     }
 
     const success = () => {
