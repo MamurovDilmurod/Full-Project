@@ -66,27 +66,17 @@ const Orders = ({ token }) => {
             />
 
             {/* Order Details */}
-            <div>
-              <div className="mb-2">
-                {order.items.map((item, index) => (
-                  <p key={index} className="py-0.5">
-                    {item.name} x {item.quantity} <span>{item.size}</span>
-                    {index !== order.items.length - 1 && ","}
-                  </p>
-                ))}
-              </div>
-              <p className="mt-3 font-medium text-gray-800">
-                {order.address.firstName + " " + order.address.lastName}
-              </p>
-              <div className="text-gray-600">
-                <p>{order.address.street + ","}</p>
-                <p>
-                  {order.address.city + ", " + order.address.state + ", "}
-                  {order.address.country + ", " + order.address.zipCode}
-                </p>
-              </div>
-              <p className="mt-2 text-gray-700">Phone: {order?.address?.phone}</p>
+           <div>
+                  <p><strong>Name:</strong> {order.address?.firstName + " " + order.address?.lastName || "Not Available"}</p>
+                  <p><strong>Email:</strong> {order.address?.email || "Not Available"}</p>
+                  <p><strong>Street:</strong> {order.address?.street || "Not Available"}</p>
+                  <p><strong>City:</strong> {order.address?.city || "Not Available"}</p>
+                  <p><strong>State:</strong> {order.address?.state || "Not Available"}</p>
+                  <p><strong>Zip Code:</strong> {order.address?.zipCode || "Not Available"}</p>
+                  <p><strong>Country:</strong> {order.address?.country || "Not Available"}</p>
+                  <p><strong>Phone:</strong> {order.address?.phone || "Not Available"}</p>
             </div>
+
 
             {/* Order Info */}
             <div>
