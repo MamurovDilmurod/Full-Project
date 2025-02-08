@@ -210,15 +210,25 @@ const PlaceOrder = () => {
             className="w-full px-4 py-2 border border-gray-300 rounded-md"
           />
         </div>
-        <input
-          required
-          type="number"
-          name="phone"
-          value={formData.phone}
-          onChange={onChangeHandler}
-          placeholder="Phone"
-          className="w-full px-4 py-2 border border-gray-300 rounded-md"
-        />
+        <div className="w-full py-2 ">
+          <PhoneInput
+            inputStyle={{
+              width: "100%",
+              fontSize: "16px",
+              transition: "border-color 0.3s ease",
+            }}
+            country={"uz"} // Default davlat kodi (O'zbekiston)
+            value={phone}
+            onChange={handleChange}
+            inputClass="w-full"
+            buttonStyle={{
+              border: "1px solid #ccc",
+              borderRadius: "8px 0 0 8px",
+            }}
+            placeholder="+998 94 123 77 77"
+          />
+          {/* <p className="mt-2 text-gray-600">Tanlangan telefon raqami: {phone}</p> */}
+        </div>
       </div>
 
       {/* Right side: Payment Method & Cart Total */}

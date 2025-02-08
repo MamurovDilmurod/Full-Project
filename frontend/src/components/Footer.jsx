@@ -67,8 +67,13 @@ function Footer() {
 
                             </li>
                             <li className="flex items-center gap-4 text-base font-light leading-6 text-gray-600 cursor-pointer hover:text-gray-900">
+<<<<<<< HEAD
                                 <a href="https://github.com/MamurovDilmurod">Github</a>
                                 <a hhref="https://github.com/MamurovDilmurod"><FaGithub className="text-xl hover:text-gray-900" /></a>
+=======
+                                <a href="https://github.com/khurramov21">Github</a>
+                                <a hhref="https://github.com/khurramov21"><FaGithub className="text-xl hover:text-gray-900" /></a>
+>>>>>>> 9c2755ad44f15e73846f36d4611c2e8a971c59b3
                             </li>
                         </ul>
                     </div>

@@ -217,4 +217,3 @@ function Navbar() {
 }
 
 export default Navbar;
-// salom aka men keldim
