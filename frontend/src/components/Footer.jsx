@@ -2,6 +2,8 @@ import React from "react";
 import { assets } from "../assets/frontend_assets/assets";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { FaGithub } from "react-icons/fa";
+
 
 function Footer() {
     const { t } = useTranslation();
@@ -35,21 +37,20 @@ function Footer() {
                                 </Link>
                             </li>
                             <li className="text-base font-light leading-6 text-gray-600 cursor-pointer hover:text-gray-800">
-                                <Link to="/about-us">
+                                <Link to="/about">
                                     {t("Footer.title4")}
 
                                 </Link>
                             </li>
                             <li className="text-base font-light leading-6 text-gray-600 cursor-pointer hover:text-gray-800">
-                                <Link to="/delivery">
+                                <Link to="/cart">
                                     {t("Footer.title5")}
 
                                 </Link>
                             </li>
                             <li className="text-base font-light leading-6 text-gray-600 cursor-pointer hover:text-gray-800">
-                                <Link to="/privacy-policy">
-                                    {t("Footer.title6")}
-
+                                <Link to="/contact">
+                                    Contact
                                 </Link>
                             </li>
                         </ul>
@@ -65,9 +66,9 @@ function Footer() {
                                 {t("Footer.title8")}
 
                             </li>
-                            <li className="text-base font-light leading-6 text-gray-600">
-                                {t("Footer.title9")}
-
+                            <li className="flex items-center gap-4 text-base font-light leading-6 text-gray-600 cursor-pointer hover:text-gray-900">
+                                <a href="https://github.com/MamurovDilmurod">Github</a>
+                                <a hhref="https://github.com/MamurovDilmurod"><FaGithub className="text-xl hover:text-gray-900" /></a>
                             </li>
                         </ul>
                     </div>
@@ -81,7 +82,6 @@ function Footer() {
                     {t("Footer.title10")}
 
                     <span className="font-medium text-gray-800">
-                        {t("Footer.title11")}
 
                     </span>
                     {t("Footer.title12")}
