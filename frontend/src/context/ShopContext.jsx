@@ -127,6 +127,7 @@ const ShopContextProvider = (props) => {
     }
   };
 
+
   // 1-varianti 
   // const getProductsData = async () => {
   //   try {

@@ -1,28 +1,3 @@
-<<<<<<< HEAD
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import { backendUrl, currency } from '../App'
-import { toast } from 'react-toastify'
-import { assets } from '../assets/assets'
-
-const Orders = ({ token }) => {
-  const [orders, setOrders] = useState([])
-
-  const fetchAllOrders = async () => {
-    if (!token) {
-      return null
-    }
-
-    try {
-      const response = await axios.post(backendUrl + '/api/order/list', {}, { headers: { token } })
-      if (response.data.success) {
-        setOrders(response.data.orders.reverse())
-      } else {
-        toast.error(response.data.message)
-      }
-    } catch (error) {
-      toast.error(error.message)
-=======
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { backendUrl, currency } from "../App";
@@ -33,13 +8,11 @@ const Orders = ({ token }) => {
   const [orders, setOrders] = useState([]);
 
   const fetchAllOrders = async () => {
-    if (!token) {
-      return null;
-    }
+    if (!token) return;
 
     try {
       const response = await axios.post(
-        backendUrl + "/api/order/list",
+        `${backendUrl}/api/order/list`,
         {},
         { headers: { token } }
       );
@@ -50,94 +23,35 @@ const Orders = ({ token }) => {
       }
     } catch (error) {
       toast.error(error.message);
->>>>>>> 9c2755ad44f15e73846f36d4611c2e8a971c59b3
     }
   };
 
   const statusHandler = async (e, orderId) => {
     try {
-<<<<<<< HEAD
-      const response = await axios.post(backendUrl + '/api/order/status', { orderId, status: e.target.value }, { headers: { token } })
-      if (response.data.success) {
-        await fetchAllOrders()
-      }
-    } catch (error) {
-      console.log(error)
-      toast.error(error.message)
-=======
       const response = await axios.post(
-        backendUrl + "/api/order/status",
+        `${backendUrl}/api/order/status`,
         { orderId, status: e.target.value },
         { headers: { token } }
       );
       if (response.data.success) {
-        await fetchAllOrders();
+        fetchAllOrders();
       }
     } catch (error) {
-      console.log(error);
       toast.error(error.message);
->>>>>>> 9c2755ad44f15e73846f36d4611c2e8a971c59b3
     }
   };
 
   useEffect(() => {
-<<<<<<< HEAD
-    fetchAllOrders()
-  }, [token])
-=======
     fetchAllOrders();
   }, [token]);
->>>>>>> 9c2755ad44f15e73846f36d4611c2e8a971c59b3
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-md">
-      <h3 className="mb-4 text-xl font-semibold text-gray-800">Order Page</h3>
-
-<<<<<<< HEAD
-      <div>
-        {
-          orders.map((order, index) => (
-            <div className='grid grid-cols-1 sm:grid-cols-[0.5fr_2fr_1fr] lg:grid-cols-[0.5fr_2fr_1fr_1fr_1fr] gap-3 items-start border border-gray-200 p-5 md:p-8 my-3 md:my-4 text-xs sm:text-sm text-gray-700' key={index}>
-              <img className='w-12 ' src={assets.parcel_icon} alt="" />
-              <div>
-                <div>
-                  {order.items.map((item, index) => {
-                    if (index === order.items.length - 1) {
-                      return <p className='py-0.5' key={index}>{item.name} X {item.quantity} <span>{item.size}</span></p>
-                    } else {
-                      return <p className='py-0.5' key={index}>{item.name} X {item.quantity} <span>{item.size}</span>,</p>
-                    }
-                  })}
-                </div>
-                <p className='mt-3 mb-2 font-medium'>{order.address.firstName + " " + order.address.lastName}</p>
-                <div>
-                  <p>{order.address.street + ","}</p>
-                  <p>{order.address.city + ", " + order.address.state + ", " + order.address.country + ", " + order.address.zipCode}</p>
-                </div>
-                <p>{order.address.phone}</p>
-              </div>
-              <div>
-                <p className='text-sm sm:text-[15px]'>Items : {order.items.length}</p>
-                <p className='mt-3'>Method : {order.paymentMethod}</p>
-                <p>Payment : {order.payment ? 'Done' : 'Pending'}</p>
-                <p>Date: {new Date(order.date).toLocaleDateString()}</p>
-              </div>
-              <p className='text-sm sm:text-[15px]'>{currency}{order.amount}</p>
-              <select onChange={(e) => statusHandler(e, order._id)} value={order.status || 'Order Placed'} className='p-2 font-semibold'>
-                <option value="Order Placed">Order Placed</option>
-                <option value="Packing">Packing</option>
-                <option value="Shipped">Shipped</option>
-                <option value="Out for delivery">Out for delivery</option>
-                <option value="Delivered">Delivered</option>
-              </select>
-            </div>
-          ))
-        }
-=======
+      <h3 className="mb-4 text-xl font-semibold text-gray-800">Orders</h3>
       <div className="flex flex-col gap-4">
-        {orders.map((order, index) => (
+        {orders.map((order) => (
           <div
-            key={index}
+            key={order._id}
             className="grid grid-cols-1 sm:grid-cols-[0.5fr_2fr_1fr] lg:grid-cols-[0.5fr_2fr_1fr_1fr_1fr] gap-4 items-start border border-gray-200 p-5 md:p-8 rounded-lg hover:shadow-lg transition-shadow text-sm text-gray-700"
           >
             {/* Order Icon */}
@@ -148,17 +62,27 @@ const Orders = ({ token }) => {
             />
 
             {/* Order Details */}
-           <div>
-                  <p><strong>Name:</strong> {order.address?.firstName + " " + order.address?.lastName || "Not Available"}</p>
-                  <p><strong>Email:</strong> {order.address?.email || "Not Available"}</p>
-                  <p><strong>Street:</strong> {order.address?.street || "Not Available"}</p>
-                  <p><strong>City:</strong> {order.address?.city || "Not Available"}</p>
-                  <p><strong>State:</strong> {order.address?.state || "Not Available"}</p>
-                  <p><strong>Zip Code:</strong> {order.address?.zipCode || "Not Available"}</p>
-                  <p><strong>Country:</strong> {order.address?.country || "Not Available"}</p>
-                  <p><strong>Phone:</strong> {order.address?.phone || "Not Available"}</p>
+            <div>
+              <p>
+                <strong>Name:</strong> {order.address?.firstName}{" "}
+                {order.address?.lastName}
+              </p>
+              <p>
+                <strong>Street:</strong> {order.address?.street || "N/A"}
+              </p>
+              <p>
+                <strong>City:</strong> {order.address?.city || "N/A"}
+              </p>
+              <p>
+                <strong>State:</strong> {order.address?.state || "N/A"}
+              </p>
+              <p>
+                <strong>Country:</strong> {order.address?.country || "N/A"}
+              </p>
+              <p>
+                <strong>Phone:</strong> {order.address?.phone || "N/A"}
+              </p>
             </div>
-
 
             {/* Order Info */}
             <div>
@@ -169,10 +93,11 @@ const Orders = ({ token }) => {
                 Method: {order.paymentMethod}
               </p>
               <p
-                className={`mt-1 font-medium ${order.payment ? "text-green-600" : "text-green-600"
-                  }`}
+                className={`mt-1 font-medium ${
+                  order.payment ? "text-green-600" : "text-green-600"
+                }`}
               >
-                Payment: {order.payment ? "Done" : "Pending"}
+                Payment: {order.payment ? "Done" : "Done"}
               </p>
               <p className="mt-2 text-gray-600">
                 Date: {new Date(order.date).toLocaleDateString()}
@@ -184,7 +109,6 @@ const Orders = ({ token }) => {
               {currency}
               {order.amount}
             </p>
-
 
             {/* Status Dropdown */}
             <select
@@ -200,14 +124,9 @@ const Orders = ({ token }) => {
             </select>
           </div>
         ))}
->>>>>>> 9c2755ad44f15e73846f36d4611c2e8a971c59b3
       </div>
     </div>
   );
 };
 
-<<<<<<< HEAD
-export default Orders
-=======
 export default Orders;
->>>>>>> 9c2755ad44f15e73846f36d4611c2e8a971c59b3
