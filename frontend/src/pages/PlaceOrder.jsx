@@ -12,7 +12,15 @@ import "react-phone-input-2/lib/style.css";
 const PlaceOrder = () => {
   const [method, setMethod] = useState("cod");
   const [error, setError] = useState(null);
-  const { backendUrl, token, cartItem, setCartItem, getCartAmount, delivery_fee, products } = useContext(ShopContext);
+  const {
+    backendUrl,
+    token,
+    cartItem,
+    setCartItem,
+    getCartAmount,
+    delivery_fee,
+    products,
+  } = useContext(ShopContext);
   const navigate = useNavigate();
   const [phone, setPhone] = useState("");
 
@@ -49,7 +57,11 @@ const PlaceOrder = () => {
       receipt: order.receipt,
       handler: async (response) => {
         try {
-          const { data } = await axios.post(backendUrl + "/api/order/verifyRazorpay", response, { headers: { token } });
+          const { data } = await axios.post(
+            backendUrl + "/api/order/verifyRazorpay",
+            response,
+            { headers: { token } }
+          );
           if (data.success) {
             navigate("/order");
             setCartItem({});
@@ -72,7 +84,9 @@ const PlaceOrder = () => {
       for (const items in cartItem) {
         for (const item in cartItem[items]) {
           if (cartItem[items][item] > 0) {
-            const itemInfo = structuredClone(products.find((product) => product._id === items));
+            const itemInfo = structuredClone(
+              products.find((product) => product._id === items)
+            );
             if (itemInfo) {
               itemInfo.size = item;
               itemInfo.quantity = cartItem[items][item];
@@ -90,7 +104,11 @@ const PlaceOrder = () => {
 
       switch (method) {
         case "cod":
-          const response = await axios.post(backendUrl + "/api/order/place", orderData, { headers: { token } });
+          const response = await axios.post(
+            backendUrl + "/api/order/place",
+            orderData,
+            { headers: { token } }
+          );
           if (response.data.success) {
             setCartItem({});
             navigate("/order");
@@ -100,7 +118,11 @@ const PlaceOrder = () => {
           break;
 
         case "stripe":
-          const responseStripe = await axios.post(backendUrl + "/api/order/stripe", orderData, { headers: { token } });
+          const responseStripe = await axios.post(
+            backendUrl + "/api/order/stripe",
+            orderData,
+            { headers: { token } }
+          );
           if (responseStripe.data.success) {
             const { session_url } = responseStripe.data;
             window.location.replace(session_url);
@@ -110,7 +132,11 @@ const PlaceOrder = () => {
           break;
 
         case "razorpay":
-          const responseRazorpay = await axios.post(backendUrl + "/api/order/razorpay", orderData, { headers: { token } });
+          const responseRazorpay = await axios.post(
+            backendUrl + "/api/order/razorpay",
+            orderData,
+            { headers: { token } }
+          );
           if (responseRazorpay.data.success) {
             initPay(responseRazorpay.data.order);
           }
@@ -126,7 +152,10 @@ const PlaceOrder = () => {
   };
 
   return (
-    <form onSubmit={onSubmitHandler} className="flex flex-col justify-between gap-4 pt-5 sm:flex-row sm:pt-1 min-h-[80vh] border-t">
+    <form
+      onSubmit={onSubmitHandler}
+      className="flex flex-col justify-between gap-4 pt-5 sm:flex-row sm:pt-1 min-h-[80vh] border-t"
+    >
       {/* Left side: Delivery Information */}
       <div className="flex flex-col w-full gap-4 sm:max-w-[480px]">
         <div className="my-3 text-xl font-bold sm:text-2xl">
@@ -210,25 +239,15 @@ const PlaceOrder = () => {
             className="w-full px-4 py-2 border border-gray-300 rounded-md"
           />
         </div>
-        <div className="w-full py-2 ">
-          <PhoneInput
-            inputStyle={{
-              width: "100%",
-              fontSize: "16px",
-              transition: "border-color 0.3s ease",
-            }}
-            country={"uz"} // Default davlat kodi (O'zbekiston)
-            value={phone}
-            onChange={handleChange}
-            inputClass="w-full"
-            buttonStyle={{
-              border: "1px solid #ccc",
-              borderRadius: "8px 0 0 8px",
-            }}
-            placeholder="+998 94 123 77 77"
-          />
-          {/* <p className="mt-2 text-gray-600">Tanlangan telefon raqami: {phone}</p> */}
-        </div>
+        <input
+          required
+          type="number"
+          name="phone"
+          value={formData.phone}
+          onChange={onChangeHandler}
+          placeholder="Phone"
+          className="w-full px-4 py-2 border border-gray-300 rounded-md"
+        />
       </div>
 
       {/* Right side: Payment Method & Cart Total */}
@@ -240,12 +259,18 @@ const PlaceOrder = () => {
           <div className="flex flex-col gap-3 lg:flex-row lg:justify-start">
             <div
               onClick={() => setMethod("cod")}
-              className={`flex items-center gap-2 p-2 px-3 border cursor-pointer ${method === "cod" ? "border-green-400" : ""}`}
+              className={`flex items-center gap-2 p-2 px-3 border cursor-pointer ${
+                method === "cod" ? "border-green-400" : ""
+              }`}
             >
               <p
-                className={`rounded-full border border-gray-400 min-w-[20px] min-h-[20px] ${method === "cod" ? "bg-green-400" : ""}`}
+                className={`rounded-full border border-gray-400 min-w-[20px] min-h-[20px] ${
+                  method === "cod" ? "bg-green-400" : ""
+                }`}
               ></p>
-              <p className="mx-4 text-sm font-medium text-gray-500">Cash On Delivery</p>
+              <p className="mx-4 text-sm font-medium text-gray-500">
+                Cash On Delivery
+              </p>
             </div>
             {error && <p className="mt-4 text-sm text-red-500">{error}</p>}
             <button
@@ -255,7 +280,6 @@ const PlaceOrder = () => {
               Place Order
             </button>
           </div>
-
         </div>
       </div>
     </form>
@@ -290,7 +314,6 @@ export default PlaceOrder;
 //     country: "",
 //     phone: "",
 //   });
-
 
 //   const onChangeHandler = (e) => {
 //     const name = e.target.name;
@@ -393,7 +416,6 @@ export default PlaceOrder;
 //     }
 //   };
 
-
 //   return (
 //     <form onSubmit={onSubmitHandler} className="flex flex-col justify-between gap-4 pt-5 sm:flex-row sm:pt-1 min-h-[80vh] border-t">
 //       {/* Left side: Delivery Information */}
@@ -479,15 +501,17 @@ export default PlaceOrder;
 //             className="w-full px-4 py-2 border border-gray-300 rounded-md"
 //           />
 //         </div>
-// <input
-//   required
-//   type="number"
-//   name="phone"
-//   value={formData.phone}
-//   onChange={onChangeHandler}
-//   placeholder="Phone"
-//   className="w-full px-4 py-2 border border-gray-300 rounded-md"
-// />
+{
+  /* <input
+  required
+  type="number"
+  name="phone"
+  value={formData.phone}
+  onChange={onChangeHandler}
+  placeholder="Phone"
+  className="w-full px-4 py-2 border border-gray-300 rounded-md"
+/> */
+}
 //       </div>
 
 //       {/* Right side: Payment Method & Cart Total */}
